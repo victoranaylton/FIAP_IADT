@@ -66,10 +66,12 @@ crossover_rate = 0.5
 
 Ajuste os valores no arquivo de configuração `config.ini` e execute o script abaixo
 
-> python financial_plan.py
+> python run.py
 
 ### Resultado Esperado
 
 Ao final da execução do algoritmo genético, o melhor plano financeiro será exibido, mostrando a distribuição mensal dos gastos essenciais, gastos não essenciais e investimentos em renda fixa, renda variável e tesouro. Além disso, será exibida a reserva financeira total após o período planejado.
 
+
+![](./asset/result.png "Resultado")
 
