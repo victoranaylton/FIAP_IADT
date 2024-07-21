@@ -7,6 +7,7 @@ import numpy as np
 import pygame
 import sys
 import io
+import hashlib
 from financial_plan import *
 
 # Inicializar Pygame
@@ -15,6 +16,10 @@ window_size = (1500, 600)  # Ajuste o tamanho da janela para acomodar gráfico e
 screen = pygame.display.set_mode(window_size)
 pygame.display.set_caption("Genetic Algorithm Evolution")
 font = pygame.font.SysFont(None, 18)
+
+def calculate_hash_individual(individual):
+    individual_str = str(individual).encode()
+    return hashlib.md5(individual_str).hexdigest()
 
 def plot_reserve_totals(screen, generations, reserve_totals):
     plt.clf()
@@ -63,6 +68,7 @@ def run_genetic_algorithm(num_generations, population_size, num_months, renda_to
                           custos_variaveis, risco_renda_fixa, risco_renda_variavel,
                           risco_tesouro, mutation_rate, population):
     best_individuals_history = []
+    seen_hashes = set()
 
     for generation in range(num_generations):
         for event in pygame.event.get():
@@ -95,7 +101,11 @@ def run_genetic_algorithm(num_generations, population_size, num_months, renda_to
         while len(new_population) < population_size:
             parent1, parent2 = random.choices(population[:10], k=2)
             child1, _ = crossover_positions(parent1, parent2)
-            new_population.append(child1)
+
+            hash_child1 = calculate_hash_individual(child1)
+            if hash_child1 not in seen_hashes:
+                seen_hashes.add(hash_child1)
+                new_population.append(child1)
 
         population = new_population
 
