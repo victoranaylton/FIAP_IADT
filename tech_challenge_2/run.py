@@ -2,8 +2,6 @@ import random
 import matplotlib.pyplot as plt
 import configparser
 import logging
-import pickle
-import numpy as np
 import pygame
 import sys
 import io
@@ -11,10 +9,10 @@ from financial_plan import *
 
 # Inicializar Pygame
 pygame.init()
-window_size = (1500, 600)  # Ajuste o tamanho da janela para acomodar gráfico e texto lado a lado
+window_size = (1800, 600)  # Ajuste o tamanho da janela para acomodar gráfico e texto lado a lado
 screen = pygame.display.set_mode(window_size)
 pygame.display.set_caption("Genetic Algorithm Evolution")
-font = pygame.font.SysFont(None, 18)
+font = pygame.font.SysFont(None, 24)
 
 def plot_reserve_totals(screen, generations, reserve_totals):
     plt.clf()
@@ -38,6 +36,7 @@ def display_final_results(screen, font, best_individual):
 
     lines = [
         f"Total Reserva acumulada: {best_individual[1][0]:.2f}",
+        f"Total Gastos emergenciais: {best_individual[1][9]:.2f}",
         f"Total Receita no período: {best_individual[1][1]:.2f}",
         f"Total Gastos no período: {best_individual[1][2]:.2f}",
         f"Total Renda Fixa: {best_individual[1][3]:.2f}",
@@ -52,9 +51,9 @@ def display_final_results(screen, font, best_individual):
         text_surface.blit(text, (10, 20 + 25 * i))
 
     for j, month in enumerate(best_individual[1][8]):
-        month_text = f"Mês {j + 1}: Gastos Essenciais: {month[0]:.2f}, Gastos Não-Essenciais: {month[1]:.2f}, Renda Fixa: {month[2]:.2f}, Renda Variável: {month[3]:.2f}, Tesouro: {month[4]:.2f}"
+        month_text = f"Mês {j + 1}: Receita Total: {month[0]:.2f}, Gastos totais: {month[1]:.2f}, Renda Fixa: {month[2]:.2f}, Renda Variável: {month[3]:.2f}, Tesouro: {month[4]:.2f}"
         text = font.render(month_text, True, (0, 0, 0))
-        text_surface.blit(text, (10, 230 + 25 * j))
+        text_surface.blit(text, (10, 250 + 25 * j))
 
     screen.blit(text_surface, (window_size[0] // 2, 0))
     pygame.display.flip()

@@ -1,12 +1,5 @@
 import random
-import matplotlib.pyplot as plt
-import configparser
 import logging
-import pickle
-import numpy as np
-import pygame
-import sys
-import io
 
 # Configurações de logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -14,12 +7,6 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 # Função para gerar uma população inicial
 def generate_population(size, num_meses, receita_total, custos_totais):
     population = []
-
-    try:
-        with open('population_z', 'rb') as f:
-            population = pickle.load(f)
-    except (FileNotFoundError, EOFError):
-        pass
 
     if len(population) > 0:
         return population
@@ -32,12 +19,9 @@ def generate_population(size, num_meses, receita_total, custos_totais):
         for _ in range(num_meses):
             perc_fixa = random.uniform(0, max_perc_fixa)
             perc_variavel = random.uniform(0, max_perc_variavel)
-            perc_tesouro = 1 - perc_fixa - perc_variavel
+            perc_tesouro = 1 - (perc_fixa + perc_variavel)
             individual.append((receita_total, custos_totais, perc_fixa, perc_variavel, perc_tesouro))
         population.append(individual)
-
-    with open('population_z', 'wb') as f:
-        pickle.dump(population, f)
 
     return population
 
@@ -80,12 +64,20 @@ def eval_plano(plano, renda_total, risco_renda_fixa, risco_renda_variavel, risco
         total_receita += renda_total
         total_valor_aplicado += valor_disponivel
         total_retorno_aplicado += reserva_total - valor_disponivel
-
-    for _ in range(random.randint(1, 3)):
+    
+    emergencia_total = total_reserva
+    for emergencia in range(random.randint(1, 3)):
         emergencia = random.uniform(0.1, 0.3) * total_reserva
+        # if emergencia > total_reserva:
+        #     return float('-inf')  # Penalidade alta se a reserva não for suficiente
         total_reserva -= emergencia
 
-    return total_reserva, total_receita, total_gastos, total_renda_fixa, total_renda_variavel, total_tesouro, total_valor_aplicado, total_retorno_aplicado, plano
+    # if total_reserva < meta_reserva:
+    #     return float('-inf')  # Penalidade baixa
+
+    emergencia_total = emergencia_total - total_reserva
+
+    return total_reserva, total_receita, total_gastos, total_renda_fixa, total_renda_variavel, total_tesouro, total_valor_aplicado, total_retorno_aplicado, plano, emergencia_total
 
 def fitness(individual):
     return individual[0]
@@ -105,9 +97,9 @@ def crossover_positions(parent1, parent2):
         p1_values[2], p1_values[3], p1_values[4] = p1_values[4], p1_values[2], p1_values[3]
         p2_values[2], p2_values[3], p2_values[4] = p2_values[4], p2_values[2], p2_values[3]
 
-        p1_values[2], p2_values[2] = p2_values[2], p1_values[2]
-        p1_values[4] = 1 - p1_values[2] - p1_values[3]
-        p2_values[4] = 1 - p2_values[2] - p2_values[3]
+        # p1_values[2], p2_values[2] = p2_values[2], p1_values[2]
+        # p1_values[4] = 1 - p1_values[2] - p1_values[3]
+        # p2_values[4] = 1 - p2_values[2] - p2_values[3]
 
         child1.append(tuple(p1_values))
         child2.append(tuple(p2_values))
