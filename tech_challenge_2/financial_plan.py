@@ -11,8 +11,8 @@ def generate_population(size, num_meses, receita_total, custos_totais):
     if len(population) > 0:
         return population
 
-    max_perc_fixa = 0.30
-    max_perc_variavel = 0.70
+    max_perc_fixa = 0.32
+    max_perc_variavel = 0.55
 
     for _ in range(size):
         individual = []
@@ -37,14 +37,10 @@ def eval_plano(plano, renda_total, risco_renda_fixa, risco_renda_variavel, risco
     total_retorno_aplicado = 0
 
     for mes in plano:
-        _, _, valor_fixo, valor_variavel, valor_tesouro = mes
+        _, _, perc_fixa, perc_variavel, perc_tesouro = mes
         reserva_percentual = 0.12
         reserva_total = reserva_percentual * (renda_total - custo_total)
         valor_disponivel = renda_total - custo_total - reserva_total
-
-        perc_fixa = random.uniform(0, 0.45)
-        perc_variavel = random.uniform(0, 0.35)
-        perc_tesouro = 1 - perc_fixa - perc_variavel
 
         renda_fixa = valor_disponivel * perc_fixa
         renda_variavel = valor_disponivel * perc_variavel
