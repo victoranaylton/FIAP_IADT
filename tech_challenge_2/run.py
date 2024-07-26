@@ -104,8 +104,6 @@ def run_genetic_algorithm(num_generations, population_size, num_months, renda_to
 
         plot_reserve_totals(screen, generation_nums, reserve_totals)
 
-    print(best_individuals_history[-1])
-    print(best_individuals_history[-2])
     display_final_results(screen, font, best_individuals_history[-1])
 
 

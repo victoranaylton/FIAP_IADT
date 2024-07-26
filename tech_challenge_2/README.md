@@ -5,8 +5,8 @@
 O objetivo deste projeto é utilizar algoritmos genéticos para prever o melhor cenário de planejamento financeiro familiar com objetivo de maximizar a reserva financeira ao longo de um período definido.
 
 ## Objetivos
-Maximizar a reserva financeira total após um período definido, considerando possíveis emergências financeiras.
-Definir um limite para gastos mensais
+- Maximizar a reserva financeira total após um período definido, considerando 3 diferentes tipos de investimentos, seus riscos e possíveis emergências financeiras.
+- Definir um limite para gastos mensais
 
 ## Estrutura do Projeto
 
@@ -20,11 +20,15 @@ Este arquivo permite ao usuário definir os parâmetros financeiros e os parâme
 
 ```ini
 [finance]
-salario_fixo = 6500
-outras_receitas = 500
-meta_reserva = 30000
+salario_fixo = 4685
+outras_receitas = 1240
+meta_reserva = 13000
 num_meses = 12
+custos_fixos = 2650
 max_reserva = 30
+risco_renda_fixa = 0.01
+risco_renda_variavel = 0.1
+risco_tesouro = 0.05
 
 [genetic_algorithm]
 population_size = 100
