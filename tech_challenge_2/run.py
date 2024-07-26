@@ -116,7 +116,6 @@ meta_reserva = config.getfloat('finance', 'meta_reserva')
 custos_fixos = config.getfloat('finance', 'custos_fixos')
 custos_variaveis = custos_fixos * 0.12
 num_meses = config.getint('finance', 'num_meses')
-max_reserva = config.getfloat('finance', 'max_reserva') / 100
 
 risco_renda_fixa = config.getfloat('finance', 'risco_renda_fixa')
 risco_renda_variavel = config.getfloat('finance', 'risco_renda_variavel')
