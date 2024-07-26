@@ -118,15 +118,11 @@ meta_reserva = config.getfloat('finance', 'meta_reserva')
 custos_fixos = config.getfloat('finance', 'custos_fixos')
 custos_variaveis = custos_fixos * 0.12
 num_meses = config.getint('finance', 'num_meses')
-min_gastos_essenciais = config.getfloat('finance', 'min_gastos_essenciais') / 100
-max_gastos_essenciais = config.getfloat('finance', 'max_gastos_essenciais') / 100
-min_gastos_nao_essenciais = config.getfloat('finance', 'min_gastos_nao_essenciais') / 100
-max_gastos_nao_essenciais = config.getfloat('finance', 'max_gastos_nao_essenciais') / 100
 max_reserva = config.getfloat('finance', 'max_reserva') / 100
 
-risco_renda_fixa = 0.01
-risco_renda_variavel = 0.1
-risco_tesouro = 0.05
+risco_renda_fixa = config.getfloat('finance', 'risco_renda_fixa')
+risco_renda_variavel = config.getfloat('finance', 'risco_renda_variavel')
+risco_tesouro = config.getfloat('finance', 'risco_tesouro')
 
 population_size = config.getint('genetic_algorithm', 'population_size')
 num_generations = config.getint('genetic_algorithm', 'ngen')

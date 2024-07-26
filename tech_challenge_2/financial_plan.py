@@ -84,25 +84,13 @@ def fitness(individual):
 
 # Função para o crossover
 def crossover_positions(parent1, parent2, mutated):
-    if len(parent1) != len(parent2):
-        raise ValueError("parent1 e parent2 devem ter o mesmo comprimento")
-
-    child1 = []
-    child2 = []
-
-    for (p1, p2) in zip(parent1, parent2):
-        p1_values = list(p1)
-        p2_values = list(p2)
-
-        p1_values[2], p1_values[3], p1_values[4] = p1_values[4], p1_values[2], p1_values[3]
-        p2_values[2], p2_values[3], p2_values[4] = p2_values[4], p2_values[2], p2_values[3]
-
-        p1_values[2], p1_values[3] = p1_values[2] - mutated, p1_values[3] + mutated,
-        p2_values[2], p2_values[3] = p2_values[2] - mutated, p2_values[3] + mutated,
-
-        child1.append(tuple(p1_values))
-        child2.append(tuple(p2_values))
-
+    size = len(parent1)
+    start = random.randint(0, size - 1)
+    end = random.randint(start + 1, size)
+    slice1 = parent1[start:end]
+    slice2 = parent2[start:end]
+    child1 = parent1[:start] + slice2 + parent1[end:]
+    child2 = parent2[:start] + slice1 + parent2[end:]
     return child1, child2
 
 def process_best_individuals_history(best_individuals_history):
