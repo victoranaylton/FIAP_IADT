@@ -93,7 +93,7 @@ def run_genetic_algorithm(num_generations, population_size, num_months, renda_to
 
         while len(new_population) < population_size:
             parent1, parent2 = random.choices(population[:10], k=2)
-            child1,_ = crossover_positions(parent1, parent2, mutation_rate)
+            child1,_ = crossover_positions(parent1, parent2)
             new_population.append(child1)
 
         population = new_population

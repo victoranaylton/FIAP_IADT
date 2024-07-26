@@ -79,7 +79,7 @@ def fitness(individual):
     return individual[0]
 
 # Função para o crossover
-def crossover_positions(parent1, parent2, mutated):
+def crossover_positions(parent1, parent2):
     size = len(parent1)
     start = random.randint(0, size - 1)
     end = random.randint(start + 1, size)
